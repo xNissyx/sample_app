@@ -10,11 +10,15 @@ class ListsController < ApplicationController
 
   def create
     # 引数のlist_paramsはストロングパラメータのメソッド
-    list = List.new(list_params)
+    @list = List.new(list_params)
     
-    list.save
+    if @list.save
+      redirect_to list_path(@list.id)
+    else
+      render :new
+    end
     
-    redirect_to list_path(list.id)
+    
   end
 
   def index
