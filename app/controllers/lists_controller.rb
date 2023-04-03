@@ -3,13 +3,13 @@ class ListsController < ApplicationController
   def new
     @list = List.new
   end
-  
+
   def create
-    # １.&2. データを受け取り新規登録するためのインスタンス作成
+    # 引数のlist_paramsはストロングパラメータのメソッド
     list = List.new(list_params)
-    # 3. データをデータベースに保存するためのsaveメソッド実行
+    
     list.save
-    # 4. 詳細画面へリダイレクト
+    
     redirect_to list_path(list.id)
   end
 
@@ -22,13 +22,21 @@ class ListsController < ApplicationController
   end
 
   def edit
+    @list = List.find(params[:id])
   end
-  
-  
-  
-  
+
+  def update
+    list = List.find(params[:id])
+    list.update(list_params)
+    redirect_to list_path(list.id)
+  end
+
+
+
+
     private
   # ストロングパラメータ
+  # ストロングパラメータは受け取る値に制限をかけている
   def list_params
     params.require(:list).permit(:title, :body)
   end
