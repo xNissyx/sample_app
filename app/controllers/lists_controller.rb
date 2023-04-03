@@ -1,5 +1,9 @@
 class ListsController < ApplicationController
+    
+    # ActionController invalidauthenticitytokenエラーのための記述
     protect_from_forgery
+    
+    
   def new
     @list = List.new
   end
@@ -30,14 +34,13 @@ class ListsController < ApplicationController
     list.update(list_params)
     redirect_to list_path(list.id)
   end
-
-
-
-
-    private
+  
+  
+  private
+    
   # ストロングパラメータ
   # ストロングパラメータは受け取る値に制限をかけている
   def list_params
-    params.require(:list).permit(:title, :body)
+    params.require(:list).permit(:title, :body, :image)
   end
 end
